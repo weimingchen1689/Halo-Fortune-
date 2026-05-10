@@ -48,6 +48,8 @@ curl -sI https://halofortune.com.au/ | grep -iE "server|x-powered-by|cf-ray"
 
 > ⚠ 如果你**没有**生产站源码或后台访问权限，停在这里，把 Discovery 报告交给用户，不要继续往下做。
 
+> 💡 **没有 shell 怎么办**：如果你在 CMS 后台环境无法跑 curl，用以下任一替代：(a) https://www.webpagetest.org/ 自定义 UA 测试；(b) https://search.google.com/test/mobile-friendly 看渲染后 HTML；(c) 浏览器开发者工具 → Network → 设置 User-Agent override 重放请求；(d) 用 `wget --user-agent=...` 替代。把方法和结果写入 Discovery 笔记。
+
 ---
 
 ## 2. 关键事实（已确认，可直接写入页面）
@@ -62,7 +64,12 @@ curl -sI https://halofortune.com.au/ | grep -iE "server|x-powered-by|cf-ray"
 | 业务范围 | First Home Buyer · Property Investor · Owner-Occupied · Bridging Loan |
 | 目标客群 | 澳洲本地居民 + 墨尔本华人买家（中英双语） |
 
-> 以下信息**用户必须提供**才能填空：ABN、ACL（Australian Credit Licence）或 ACR（Credit Representative）编号、MFAA/FBAA 会员编号、合作贷方（lender panel）名单、Wei Chen 的从业年限/累计放款规模、营业时间、地理坐标。**未提供的字段不要编造，留 TODO 占位。**
+> 以下信息**用户必须提供**才能填空：ABN、ACL（Australian Credit Licence）或 ACR（Credit Representative）编号、MFAA/FBAA 会员编号、**AFCA 会员号**（持牌信贷机构强制要求的外部争议解决机制）、合作贷方（lender panel）名单、Wei Chen 的从业年限/累计放款规模、营业时间、地理坐标。**未提供的字段不要编造，留 TODO 占位。**
+
+> ⚠ **澳洲合规硬性要求**（不是 GEO 但不能漏）：
+> - 任何讨论利率/借款额/还款的页面，底部必须有 **ASIC RG 234 "general advice"** 免责声明，例如："The information on this page is general in nature only and does not take into account your personal objectives, financial situation or needs. Before acting on any information, consider whether it is appropriate for you and seek personal financial advice."
+> - 全站底部必须显示 **ABN + ACL/ACR 编号 + AFCA 编号**，格式参考 ASIC MoneySmart 官方指引
+> - 中文版需提供同等中文翻译版本
 
 ---
 
@@ -134,7 +141,38 @@ Allow: /
 Sitemap: https://halofortune.com.au/sitemap.xml
 ```
 
-#### 1.2 WAF / Cloudflare / Nginx 放行
+> 注：每个独立 `User-agent` 块在 robots.txt 协议中相互独立，不继承 `User-agent: *` 块。这里的"显式 Allow"是**意图信号**——部分 AI 爬虫（如 OpenAI 公布的政策）会专门检查命名块的存在与否再决定是否抓取。即便 `User-agent: *` 已经允许，命名块仍要写。
+
+#### 1.1.b 新增 `/llms.txt`（站点根目录，AI 时代事实标准）
+
+```txt
+# /llms.txt
+# Specification: https://llmstxt.org/
+
+# Halo Fortune
+
+> Melbourne-based mortgage broker (ABN [TODO] · ACL/ACR #[TODO]) helping Australian residents and Chinese-speaking buyers with first-home, investment, owner-occupied and bridging loans. Bilingual service in English and 中文.
+
+## Core Services
+
+- [Mortgage Broker Melbourne (Pillar)](https://halofortune.com.au/mortgage-broker-melbourne/): Topic hub covering all loan products and the broker process.
+- [First Home Buyer Loans](https://halofortune.com.au/first-home-buyer/): FHOG eligibility, deposit requirements, LMI guidance.
+- [Investment Property Loans](https://halofortune.com.au/investment-property-loan/): LVR, serviceability, rental income assessment.
+- [Owner-Occupied Loans](https://halofortune.com.au/owner-occupied-loan/): Comparison of fixed vs variable, offset vs redraw.
+- [Refinance](https://halofortune.com.au/refinance/): When to refinance, costs, lender switching.
+- [Bridging Loans](https://halofortune.com.au/bridging-loan/): Buy-before-sell scenarios, peak debt management.
+
+## About
+
+- [Wei Chen — Mortgage Broker](https://halofortune.com.au/about/wei-chen/): Credentials, MFAA/FBAA membership, languages.
+- [Contact](https://halofortune.com.au/contact/): 332 Kings Way, South Melbourne · +61 3 9999 9768.
+
+## 中文
+
+- [中文首页](https://halofortune.com.au/zh/)
+```
+
+新增同时输出 `/llms-full.txt`（每个核心页的 markdown 全文拼接版）。生成脚本：从 sitemap 取 URL → 抓 main 区域 → markdown 化 → 用 `---` 分隔。
 
 **Cloudflare WAF 规则**（Dashboard → Security → WAF → Custom rules）：
 
@@ -151,7 +189,10 @@ Sitemap: https://halofortune.com.au/sitemap.xml
 → Action: Skip → All remaining custom rules + Bot Fight Mode + Super Bot Fight Mode
 ```
 
-并在 Cloudflare → Bots → AI Scrapers and Crawlers 设置中**关闭 "Block AI bots"**（默认开启）。
+**两个面板都要查**（Cloudflare 把 AI 爬虫管理拆在两处）：
+- **Security → WAF → Custom rules**：上面的规则
+- **Security → Bots → AI Crawlers and Scrapers**（部分套餐叫 "AI Audit" 或 "Manage AI bots"）：把 GPTBot / ClaudeBot / PerplexityBot / Google-Extended / Applebot-Extended 全部切到 **Allow**（不是 Block / Challenge）。Cloudflare 在 2024-09 推出过一键 "Block AI bots" 选项，**确认它处于关闭状态**。
+- **Security → Bots → Bot Fight Mode / Super Bot Fight Mode**：保持开启可以挡刷站，但要在上一步 WAF 自定义规则里 Skip 掉 AI UAs，否则它会先于自定义规则触发。
 
 **Nginx**（如果直接由 Nginx 控制访问）：
 
@@ -174,9 +215,11 @@ map $http_user_agent $is_ai_bot {
 
 #### 1.3 SSR / 预渲染
 
-如果当前是 React / Vue SPA，关键文案不在初始 HTML 里：
-- Next.js → 关键页改用 `getStaticProps` / App Router server components
-- 其他 SPA → 配置 prerender.io / rendertron / Cloudflare Workers 预渲染，根据 UA 给爬虫返回静态 HTML
+按 Discovery 阶段识别出的技术栈分别处理：
+- **WordPress / 传统 PHP CMS**：默认是服务端渲染，重点检查是否有插件（如 WP Rocket、Cache Enabler）的"Lazy Load HTML / Defer JS"误把正文延迟到 JS。也要检查主题是否把核心文本塞进了 `<picture>` 或 SVG。
+- **Next.js / Nuxt / SvelteKit** → 关键页改用 `getStaticProps` / App Router server components / `+page.server.ts`，确认 `view-source:` 看到的是正文而非空容器。
+- **纯 React / Vue SPA** → 配置 prerender.io / rendertron / Cloudflare Workers 预渲染，根据 UA 给爬虫返回静态 HTML。
+- **Webflow / Wix / Squarespace** → 默认 SSR，重点放在 schema 注入和 robots/Cloudflare 层。
 
 #### 1.4 验收（必须跑通）
 
@@ -232,13 +275,18 @@ done
   "@context": "https://schema.org",
   "@graph": [
     {
-      "@type": ["Organization", "FinancialService", "MortgageBroker"],
+      "@type": ["LocalBusiness", "FinancialService"],
+      "additionalType": "https://www.wikidata.org/wiki/Q1378050",
       "@id": "https://halofortune.com.au/#org",
       "name": "Halo Fortune",
+      "alternateName": "Halo Fortune Group",
       "legalName": "Halo Fortune Group Pty Ltd",
       "url": "https://halofortune.com.au/",
       "logo": "https://halofortune.com.au/assets/logo.png",
+      "image": "https://halofortune.com.au/assets/logo.png",
       "description": "Melbourne-based mortgage broker serving Australian residents and Chinese-speaking buyers with first-home, investment, owner-occupied and bridging loans.",
+      "slogan": "Bilingual mortgage broking for Melbourne — English and 中文.",
+      "priceRange": "$$",
       "telephone": "+61-3-9999-9768",
       "email": "kevin@halofortune.com",
       "address": {
@@ -249,16 +297,34 @@ done
         "postalCode": "3205",
         "addressCountry": "AU"
       },
+      "geo": {"@type": "GeoCoordinates", "latitude": "[TODO]", "longitude": "[TODO]"},
+      "openingHoursSpecification": [{
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
+        "opens": "09:00", "closes": "18:00"
+      }],
       "areaServed": [
         {"@type": "AdministrativeArea", "name": "Victoria"},
         {"@type": "City", "name": "Melbourne"}
       ],
-      "availableLanguage": ["en-AU", "zh-Hans", "zh-Hant"],
+      "knowsLanguage": ["en-AU", "zh-Hans", "zh-Hant"],
       "identifier": [
         {"@type": "PropertyValue", "propertyID": "ABN",  "value": "[TODO]"},
         {"@type": "PropertyValue", "propertyID": "ACL",  "value": "[TODO]"},
-        {"@type": "PropertyValue", "propertyID": "MFAA", "value": "[TODO]"}
+        {"@type": "PropertyValue", "propertyID": "MFAA", "value": "[TODO]"},
+        {"@type": "PropertyValue", "propertyID": "AFCA", "value": "[TODO]"}
       ],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Home Loan Services",
+        "itemListElement": [
+          {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "First Home Buyer Loan", "url": "https://halofortune.com.au/first-home-buyer/"}},
+          {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Investment Property Loan", "url": "https://halofortune.com.au/investment-property-loan/"}},
+          {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Owner-Occupied Loan", "url": "https://halofortune.com.au/owner-occupied-loan/"}},
+          {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Refinance", "url": "https://halofortune.com.au/refinance/"}},
+          {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Bridging Loan", "url": "https://halofortune.com.au/bridging-loan/"}}
+        ]
+      },
       "sameAs": [
         "https://www.facebook.com/[TODO]",
         "https://www.linkedin.com/company/[TODO]",
@@ -282,7 +348,11 @@ done
 </script>
 ```
 
-**FAQPage JSON-LD**（每个产品页底部 6-10 条问答）：
+> ⚠ **Schema 类型注意**：早期版本曾用 `"@type": "MortgageBroker"` —— 这**不是** Schema.org 合法类型，Rich Results Test 会报错。改用 `["LocalBusiness", "FinancialService"]` + `additionalType` 指向 Wikidata Q1378050（"mortgage broker"）传达语义。
+
+**FAQPage JSON-LD**（每个产品页底部 8-12 条问答）：
+
+> ⚠ **现实预期校准**：Google 自 2023-08 起**已下线大多数站点的 FAQ 富片段**（仅政府/医疗等权威类还保留）。**FAQPage schema 现在的主要价值在 AI 引擎**——ChatGPT / Perplexity / Google AI Overviews / 文心一言仍然把 FAQPage 视为高优先级抽取目标。所以仍要做，但不要向用户承诺 Google SERP 上的 FAQ 折叠效果。
 
 ```html
 <script type="application/ld+json">
@@ -339,7 +409,7 @@ done
 | 合作贷方 | 30+ lenders 的 logo 墙 + 文字列表（CBA / NAB / Westpac / ANZ / Macquarie / ING / Bankwest / ...） | logo grid + 文字 |
 | 案例 | 3-5 条 case study：金额、产品、地区、用时、客户类型（脱敏） | 卡片 + 引言 |
 
-**FAQ 必出题（中英各 6-10 条/页）**：
+**FAQ 必出题（中英各 8-12 条/页，与 schema 对齐）**：
 
 英文：
 1. How much can I borrow as a first home buyer in Melbourne?
@@ -356,8 +426,10 @@ done
 4. 找经纪人和直接找银行有什么区别？需要付费吗？
 5. 投资房贷款和自住房贷款有什么不同？
 6. 贷款审批一般要多久？
+7. 海外收入可以用来计算可贷金额吗？
+8. 维州印花税新政（First Home Buyer / 海外买家）目前怎么算？
 
-每条答案 **80-150 词**，给具体数字 + 时间 + 出处链接。
+每条答案 **80-150 词**，给具体数字 + 时间 + 出处链接。每条答案末尾必须能独立成段——AI 引擎抽取时常常只取单条 Q&A，孤立可读才有引用价值。
 
 **时间戳**：
 - 每页底部 `Last updated: 2026-05-09`，与 JSON-LD `dateModified` 同步
@@ -372,6 +444,12 @@ done
 **E-E-A-T 信号**：
 - Wei Chen 个人页：执照、会员号、年限、累计放款、Google Reviews 数量
 - 客户评价：拉 Google / ProductReview / Brokerpages 真实评价 + `Review` schema
+
+**澳洲合规免责声明**（在每个产品页 / FAQ 区块下方放固定区块，中英双语）：
+
+> *General advice disclaimer (ASIC RG 234)*: The information on this page is general in nature only and has been prepared without taking into account your personal objectives, financial situation or needs. Before acting on any information you should consider its appropriateness, having regard to your own objectives, financial situation and needs, and seek personal financial advice. Halo Fortune Group Pty Ltd · ABN [TODO] · Australian Credit Licence/Representative #[TODO] · MFAA/FBAA Member #[TODO] · AFCA Member #[TODO].
+
+> *一般建议声明*：本页信息仅为一般性资讯，未考虑您的个人目标、财务状况或需求。在依据本页任何信息行动前，请评估其是否适合您的具体情况，并寻求专业财务建议。Halo Fortune Group Pty Ltd · ABN [TODO] · 澳洲信贷牌照/代表 #[TODO] · MFAA/FBAA 会员 #[TODO] · AFCA 会员 #[TODO]。
 
 #### 验收
 
@@ -394,12 +472,40 @@ done
 
 最终向用户提交一个 PR，包含：
 
-1. `/robots.txt` 更新
-2. WAF / 服务器配置改动说明（写在 PR 描述里，因为这部分通常不在代码仓库）
-3. 首页 + 6 个话题页 + 经纪人页 + 中文版的内容与 schema
-4. `docs/geo-discovery-notes.md`（Phase 0 的发现）
-5. `docs/geo-implementation-log.md`（每个 Phase 的完成情况、跳过项、待用户提供的字段清单）
-6. PR 描述含验收命令的实际输出（curl 矩阵 + Rich Results Test 截图链接）
+1. `/robots.txt` + `/llms.txt` + `/llms-full.txt`
+2. `/sitemap.xml`（含所有新建话题页 + 中文版镜像）
+3. WAF / 服务器配置改动说明（写在 PR 描述里，因为这部分通常不在代码仓库）
+4. 首页 + 6 个话题页 + 经纪人页 + 中文版的内容与 schema
+5. 全站 footer：ABN / ACL / MFAA / AFCA 编号显示（按合规要求）
+6. 每个产品页 / FAQ 页：ASIC RG 234 general advice 免责声明（中英双语）
+7. `docs/geo-discovery-notes.md`（Phase 0 的发现）
+8. `docs/geo-implementation-log.md`（每个 Phase 的完成情况、跳过项、待用户提供的字段清单）
+9. PR 描述含验收命令的实际输出（curl 矩阵 + Rich Results Test 通过截图）
+
+**示例 sitemap.xml**：
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://halofortune.com.au/</loc>
+    <lastmod>2026-05-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en-AU" href="https://halofortune.com.au/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://halofortune.com.au/zh/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://halofortune.com.au/"/>
+  </url>
+  <url>
+    <loc>https://halofortune.com.au/mortgage-broker-melbourne/</loc>
+    <lastmod>2026-05-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <!-- ... first-home-buyer / investment-property-loan / owner-occupied-loan / refinance / bridging-loan / about/wei-chen / contact + 中文镜像 -->
+</urlset>
+```
 
 ---
 
@@ -413,13 +519,16 @@ done
 - [ ] ABN：________
 - [ ] ACL / ACR 编号：________
 - [ ] MFAA 或 FBAA 会员编号：________
+- [ ] **AFCA 会员编号**（持牌信贷机构强制披露）：________
 - [ ] 合作贷方完整名单（30+）
 - [ ] Wei Chen 从业年限、累计放款规模
 - [ ] 营业时间（每天）
 - [ ] 实际可公开的利率区间或"参考利率"政策
 - [ ] 5 条脱敏案例（金额 / 产品 / 用时）
 - [ ] Google Business Profile 链接、其他社交账号
-- [ ] 中文版是否单独子域或子目录的偏好
+- [ ] 公司地理坐标（纬度/经度，用 https://www.latlong.net 取）
+- [ ] 中文版是否单独子域（zh.halofortune.com.au）或子目录（/zh/）的偏好
+- [ ] 教育中介 / 中国市场拓展 / 电商 / HR 业务线**目前是否仍在运营**（Discovery 阶段需向用户确认，影响是否真的要"降级"）
 ```
 
 ---
