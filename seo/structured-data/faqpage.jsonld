@@ -1,0 +1,40 @@
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What does Halo Fortune Group do?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Halo Fortune Group is an Australian consultancy that helps global businesses enter, manage and grow in China through market-entry advisory, cross-border e-commerce (Happy Mall), digital marketing on Chinese platforms (Adcess), and HR services (Halo HR)."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is Sino Talent Resources (STR)?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sino Talent Resources (STR) is a registered trading name of Halo Fortune Group Pty Ltd (ACN 167 597 122)."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Which Chinese e-commerce platforms do you support?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Through Happy Mall we set up and operate flagship stores on Tmall Global, JD Worldwide, Douyin e-commerce and Xiaohongshu (RED)."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do you offer Employer of Record (EOR) in China?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Halo Human Resources provides recruitment, Employer of Record, payroll and visa/relocation support so Australian businesses can hire staff in mainland China without setting up their own entity first."
+      }
+    }
+  ]
+}
+</script>

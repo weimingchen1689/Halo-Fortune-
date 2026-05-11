@@ -1,0 +1,73 @@
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "@id": "https://halofortune.com.au/#organization",
+  "name": "Halo Fortune Group",
+  "alternateName": ["Sino Talent Resources", "STR", "Halo Fortune Group Pty Ltd"],
+  "legalName": "Halo Fortune Group Pty Ltd",
+  "url": "https://halofortune.com.au/",
+  "logo": "https://halofortune.com.au/logo.png",
+  "image": "https://halofortune.com.au/og/default.jpg",
+  "description": "Australian consultancy helping global businesses initiate, manage and expand their operations in China — market entry, cross-border e-commerce (Happy Mall), digital marketing on Chinese platforms (Adcess), and human resources services.",
+  "foundingDate": "2014",
+  "identifier": [
+    { "@type": "PropertyValue", "propertyID": "ACN", "value": "167 597 122" }
+  ],
+  "address": {
+    "@type": "PostalAddress",
+    "addressCountry": "AU",
+    "addressLocality": "REPLACE_CITY",
+    "addressRegion": "REPLACE_STATE",
+    "postalCode": "REPLACE_POSTCODE",
+    "streetAddress": "REPLACE_STREET"
+  },
+  "contactPoint": [{
+    "@type": "ContactPoint",
+    "contactType": "customer service",
+    "email": "REPLACE@halofortune.com.au",
+    "telephone": "+61-REPLACE",
+    "areaServed": ["AU", "CN"],
+    "availableLanguage": ["en", "zh-Hans"]
+  }],
+  "sameAs": [
+    "https://www.linkedin.com/company/REPLACE",
+    "https://group.halofortune.com.au/"
+  ],
+  "knowsAbout": [
+    "China market entry",
+    "Cross-border e-commerce",
+    "Tmall Global",
+    "JD Worldwide",
+    "Douyin e-commerce",
+    "Xiaohongshu (RED) marketing",
+    "WeChat marketing",
+    "Weibo marketing",
+    "Baidu SEM",
+    "KOL marketing",
+    "Employer of Record China",
+    "China recruitment"
+  ],
+  "areaServed": [
+    { "@type": "Country", "name": "Australia" },
+    { "@type": "Country", "name": "China" }
+  ],
+  "subOrganization": [
+    {
+      "@type": "Brand",
+      "name": "Happy Mall",
+      "description": "Cross-border e-commerce enablement on Tmall Global, JD Worldwide, Douyin and RED."
+    },
+    {
+      "@type": "Brand",
+      "name": "Adcess Digital Marketing",
+      "description": "Digital marketing on WeChat, Weibo, Douyin, Baidu and KOL platforms."
+    },
+    {
+      "@type": "Brand",
+      "name": "Halo Human Resources",
+      "description": "Recruitment, EOR, payroll and visa support for China operations."
+    }
+  ]
+}
+</script>

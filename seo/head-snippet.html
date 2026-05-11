@@ -1,0 +1,55 @@
+<!--
+  Drop this block inside <head> on every page.
+  Replace the placeholders {{ ... }} per page.
+  Recommended length: title <= 60 chars, description <= 155 chars.
+-->
+
+<!-- Encoding & viewport -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+
+<!-- Primary -->
+<title>{{ page_title }} | Halo Fortune Group</title>
+<meta name="description" content="{{ page_description }}">
+<link rel="canonical" href="https://halofortune.com.au{{ path }}">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
+
+<!-- Language & internationalisation -->
+<link rel="alternate" hreflang="en-AU" href="https://halofortune.com.au{{ path }}">
+<link rel="alternate" hreflang="zh-CN" href="https://halofortune.com.au/zh{{ path }}">
+<link rel="alternate" hreflang="x-default" href="https://halofortune.com.au{{ path }}">
+
+<!-- Open Graph -->
+<meta property="og:site_name" content="Halo Fortune Group">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_AU">
+<meta property="og:locale:alternate" content="zh_CN">
+<meta property="og:url" content="https://halofortune.com.au{{ path }}">
+<meta property="og:title" content="{{ page_title }} | Halo Fortune Group">
+<meta property="og:description" content="{{ page_description }}">
+<meta property="og:image" content="https://halofortune.com.au/og/{{ og_image }}.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="{{ og_image_alt }}">
+
+<!-- Twitter / X -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ page_title }} | Halo Fortune Group">
+<meta name="twitter:description" content="{{ page_description }}">
+<meta name="twitter:image" content="https://halofortune.com.au/og/{{ og_image }}.jpg">
+
+<!-- Discovery -->
+<link rel="sitemap" type="application/xml" href="https://halofortune.com.au/sitemap.xml">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+<!-- Theme -->
+<meta name="theme-color" content="#ffffff">
+
+<!--
+  JSON-LD structured data should also live inside <head>.
+  See seo/structured-data/organization.jsonld for the site-wide
+  Organization schema (include on every page), and the other
+  files in that folder for page-type-specific schemas.
+-->

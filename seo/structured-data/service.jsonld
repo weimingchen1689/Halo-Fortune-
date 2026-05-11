@@ -1,0 +1,53 @@
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "serviceType": "China Market Entry Consulting",
+  "provider": { "@id": "https://halofortune.com.au/#organization" },
+  "areaServed": [
+    { "@type": "Country", "name": "Australia" },
+    { "@type": "Country", "name": "China" }
+  ],
+  "audience": {
+    "@type": "BusinessAudience",
+    "audienceType": "Australian SMEs and brand owners entering the Chinese market"
+  },
+  "name": "China Market Entry Consulting",
+  "description": "End-to-end advisory for Australian businesses entering the Chinese market: feasibility, WFOE/JV entity setup, licensing, distribution strategy and go-to-market execution.",
+  "url": "https://halofortune.com.au/services/market-entry",
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Market Entry Services",
+    "itemListElement": [
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Feasibility study & market sizing"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "WFOE / JV entity setup"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Distribution & channel strategy"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Brand localisation"
+        }
+      }
+    ]
+  }
+}
+</script>
