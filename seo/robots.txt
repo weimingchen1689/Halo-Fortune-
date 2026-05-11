@@ -1,0 +1,119 @@
+# robots.txt for https://halofortune.com.au/
+# Deploy at the site root: https://halofortune.com.au/robots.txt
+#
+# Policy:
+#   - Allow general web crawlers (Google, Bing, etc.) full access.
+#   - Explicitly ALLOW major AI training and answer-engine crawlers so
+#     Halo Fortune Group / Sino Talent Resources content is discoverable
+#     through ChatGPT, Claude, Perplexity, Google AI Overviews, etc.
+#   - To opt-out of AI training instead, change "Allow: /" to "Disallow: /"
+#     under the relevant bot block below.
+#
+# Last reviewed: 2026-05
+
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /wp-admin/
+Disallow: /cgi-bin/
+Disallow: /*?*utm_
+Disallow: /*?*gclid=
+Disallow: /*?*fbclid=
+
+# -----------------------------------------------------------------------------
+# OpenAI
+# -----------------------------------------------------------------------------
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+# -----------------------------------------------------------------------------
+# Anthropic
+# -----------------------------------------------------------------------------
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+# -----------------------------------------------------------------------------
+# Google (AI / Gemini / Vertex training opt-in)
+# -----------------------------------------------------------------------------
+User-agent: Google-Extended
+Allow: /
+
+# -----------------------------------------------------------------------------
+# Perplexity
+# -----------------------------------------------------------------------------
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+# -----------------------------------------------------------------------------
+# Apple Intelligence
+# -----------------------------------------------------------------------------
+User-agent: Applebot-Extended
+Allow: /
+
+# -----------------------------------------------------------------------------
+# Common Crawl (used by many open-source LLMs)
+# -----------------------------------------------------------------------------
+User-agent: CCBot
+Allow: /
+
+# -----------------------------------------------------------------------------
+# ByteDance / TikTok / Doubao (important for China-facing audience)
+# -----------------------------------------------------------------------------
+User-agent: Bytespider
+Allow: /
+
+# -----------------------------------------------------------------------------
+# Amazon
+# -----------------------------------------------------------------------------
+User-agent: Amazonbot
+Allow: /
+
+# -----------------------------------------------------------------------------
+# Meta (Llama / Meta AI)
+# -----------------------------------------------------------------------------
+User-agent: Meta-ExternalAgent
+Allow: /
+
+User-agent: FacebookBot
+Allow: /
+
+# -----------------------------------------------------------------------------
+# Mistral / DuckDuckGo Assist / You.com / Cohere / Diffbot / Timpibot
+# -----------------------------------------------------------------------------
+User-agent: MistralAI-User
+Allow: /
+
+User-agent: DuckAssistBot
+Allow: /
+
+User-agent: YouBot
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
+User-agent: Diffbot
+Allow: /
+
+User-agent: Timpibot
+Allow: /
+
+# -----------------------------------------------------------------------------
+# Sitemaps
+# -----------------------------------------------------------------------------
+Sitemap: https://halofortune.com.au/sitemap.xml

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Deploy at: https://halofortune.com.au/sitemap.xml
+  Submit to:
+    - Google Search Console: https://search.google.com/search-console
+    - Bing Webmaster Tools: https://www.bing.com/webmasters
+    - IndexNow (Bing/Yandex/Seznam): https://www.indexnow.org/
+
+  Replace <lastmod> with each page's real last-modified date.
+  For multilingual pages, mirror this file as sitemap-en.xml / sitemap-zh.xml
+  and use a sitemap index to reference both.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <url>
+    <loc>https://halofortune.com.au/</loc>
+    <lastmod>2026-05-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en-AU" href="https://halofortune.com.au/"/>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://halofortune.com.au/zh/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://halofortune.com.au/"/>
+  </url>
+
+  <url>
+    <loc>https://halofortune.com.au/about</loc>
+    <lastmod>2026-05-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://halofortune.com.au/services/market-entry</loc>
+    <lastmod>2026-05-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://halofortune.com.au/happy-mall</loc>
+    <lastmod>2026-05-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://halofortune.com.au/adcess</loc>
+    <lastmod>2026-05-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://halofortune.com.au/hr</loc>
+    <lastmod>2026-05-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://halofortune.com.au/case-studies</loc>
+    <lastmod>2026-05-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://halofortune.com.au/insights</loc>
+    <lastmod>2026-05-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://halofortune.com.au/contact</loc>
+    <lastmod>2026-05-11</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+</urlset>

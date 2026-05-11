@@ -1,0 +1,19 @@
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": "https://halofortune.com.au/#website",
+  "url": "https://halofortune.com.au/",
+  "name": "Halo Fortune Group",
+  "inLanguage": ["en-AU", "zh-CN"],
+  "publisher": { "@id": "https://halofortune.com.au/#organization" },
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": "https://halofortune.com.au/search?q={search_term_string}"
+    },
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
