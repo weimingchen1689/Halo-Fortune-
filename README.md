@@ -6,14 +6,14 @@ SEO + GEO 审计与修改优化建议，覆盖 Halo Fortune Group 旗下三个�
 - **haloloan.com.au** — B2C 自雇人士 broker（同法人 ACL 483923）
 - **ftfinance.com.au** — 独立法人 retail broker（ACR 530340 in ACL 384324，FBAA M-349513）
 
-## 当前有效文档（接手实施请读这份）
+## 当前有效文档（按顺序读）
 
-➡️ **[`docs/SEO-GEO-OPTIMIZATION-2026-05-11.md`](docs/SEO-GEO-OPTIMIZATION-2026-05-11.md)**
+1. ➡️ **[`docs/SEO-GEO-OPTIMIZATION-2026-05-11.md`](docs/SEO-GEO-OPTIMIZATION-2026-05-11.md)** — Round 1 完整修复清单（2 P0 + 12 P1 + 4 P2 + 4 sitewide 重构 + V1-V12 验证脚本）
+2. ➡️ **[`docs/SEO-GEO-OPTIMIZATION-2026-05-11-FOLLOWUP.md`](docs/SEO-GEO-OPTIMIZATION-2026-05-11-FOLLOWUP.md)** — Round 2 followup，针对 Round 1 实施后剩下的 4 条 + 1 条新引入 P0 回归
 
-基于 2026-05-11 真实生产数据直连审计得出的 P0/P1/P2 修复清单，含：
+含：
 - 三品牌业务身份 + 合规防火墙规则
-- 18 条具体问题（2 P0 + 12 P1 + 4 P2），每条带证据、文件位置、代码改动方向、验证命令
-- 4 项 sitewide "一处改动影响多页" 重构建议
+- 每条问题带证据、文件位置、代码改动方向、验证命令
 - 完整的实施后验证脚本
 
 ## ⚠️ 已废弃内容（不要采用）
