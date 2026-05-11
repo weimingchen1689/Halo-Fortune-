@@ -1,39 +1,24 @@
 # Halo-Fortune-
 
-SEO & AI-crawler audit and ready-to-deploy templates for
-[halofortune.com.au](https://halofortune.com.au/).
+SEO + GEO 审计与修改优化建议，覆盖 Halo Fortune Group 旗下三个域：
 
-## Contents
+- **halofortune.com.au** — boutique B2B Mortgage Manager（ACL 483923）
+- **haloloan.com.au** — B2C 自雇人士 broker（同法人 ACL 483923）
+- **ftfinance.com.au** — 独立法人 retail broker（ACR 530340 in ACL 384324，FBAA M-349513）
 
-```
-docs/
-  SEO-AUDIT.md            # 审计报告 + 修复优先级清单 + 自查命令
-seo/
-  robots.txt              # 显式放行 GPTBot / ClaudeBot / PerplexityBot ...
-  llms.txt                # AI 友好的站点摘要
-  sitemap.xml             # URL 模板（含 hreflang）
-  head-snippet.html       # <head> 完整模板（title / OG / Twitter / canonical）
-  structured-data/
-    organization.jsonld   # 全站 Organization
-    website.jsonld        # WebSite + SearchAction
-    service.jsonld        # 服务页示例
-    breadcrumb.jsonld     # 面包屑示例
-    faqpage.jsonld        # FAQ 示例
-```
+## 当前有效文档（接手实施请读这份）
 
-## 部署步骤
+➡️ **[`docs/SEO-GEO-OPTIMIZATION-2026-05-11.md`](docs/SEO-GEO-OPTIMIZATION-2026-05-11.md)**
 
-1. **静态文件**：把 `seo/robots.txt`、`seo/llms.txt`、`seo/sitemap.xml`
-   原样放到站点根目录，可通过下面路径访问：
-   - `https://halofortune.com.au/robots.txt`
-   - `https://halofortune.com.au/llms.txt`
-   - `https://halofortune.com.au/sitemap.xml`
-2. **HTML head**：把 `seo/head-snippet.html` 内容合并进每页 `<head>`，
-   替换 `{{ page_title }}` / `{{ page_description }}` / `{{ path }}` 等占位符。
-3. **JSON-LD**：把 `seo/structured-data/organization.jsonld` 与
-   `website.jsonld` 注入每页 `<head>`；按页型追加 `service.jsonld` /
-   `breadcrumb.jsonld` / `faqpage.jsonld`。
-4. **GSC / Bing**：在 Google Search Console、Bing Webmaster Tools
-   提交 sitemap，验证站点所有权。
+基于 2026-05-11 真实生产数据直连审计得出的 P0/P1/P2 修复清单，含：
+- 三品牌业务身份 + 合规防火墙规则
+- 18 条具体问题（2 P0 + 12 P1 + 4 P2），每条带证据、文件位置、代码改动方向、验证命令
+- 4 项 sitewide "一处改动影响多页" 重构建议
+- 完整的实施后验证脚本
 
-完整的修复优先级、复验命令与发现详情见 [`docs/SEO-AUDIT.md`](docs/SEO-AUDIT.md)。
+## ⚠️ 已废弃内容（不要采用）
+
+- `docs/SEO-AUDIT.md` — 当时基于沙盒受限 + WebSearch 幻觉的错误审计
+- `seo/` 目录全部模板 — 基于同一幻觉生成的"Sino Talent Resources / Happy Mall / Adcess" 系列内容
+
+详情见 `seo/DEPRECATED.md` 与 `docs/SEO-AUDIT.md` 顶部说明。

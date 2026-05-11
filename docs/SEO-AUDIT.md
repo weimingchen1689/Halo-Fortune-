@@ -1,4 +1,19 @@
-# halofortune.com.au — SEO & AI 抓取审计
+# ⚠️ DEPRECATED — DO NOT USE
+
+**本文档已废弃。** 当时审计基于沙盒受限 + WebSearch narrative 幻觉，把 halofortune.com.au 错误描述成"中国市场咨询公司 / Happy Mall / Adcess Digital Marketing / Sino Talent Resources / Halo HR"。
+
+**真实业务**：halofortune.com.au 是一家位于墨尔本的 boutique B2B Mortgage Manager（持 ACL 483923，ABN 51 167 597 122），服务认证 mortgage broker；与 haloloan.com.au（同法人 B2C 自雇人士 broker）和 ftfinance.com.au（独立法人 retail broker）构成三品牌生态。
+
+**当前有效审计**：见 [`SEO-GEO-OPTIMIZATION-2026-05-11.md`](./SEO-GEO-OPTIMIZATION-2026-05-11.md)
+
+同目录下 `seo/` 文件夹里的所有模板（robots.txt / llms.txt / sitemap.xml / structured-data/*.jsonld）**也基于同一幻觉**，请勿采纳。
+
+---
+
+<details>
+<summary>原 stale audit 内容（仅作历史保留）</summary>
+
+# halofortune.com.au — SEO & AI 抓取审计（已废弃）
 
 **审计日期**：2026-05-11
 **分支**：`claude/audit-halofortune-seo-Jqs5L`
@@ -147,3 +162,4 @@ curl -s https://halofortune.com.au/ | grep -A 20 'application/ld+json'
 如果业务上希望反过来——拒绝 AI 训练——把对应 bot 的 `Allow: /`
 改为 `Disallow: /` 即可。建议在 `Adcess` / `Happy Mall` 这类
 营销内容页保持开放，在内部研究、客户案例等敏感目录单独 `Disallow`。
+</details>
